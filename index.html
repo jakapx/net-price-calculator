@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>net price calculator</title>
+    <style>body {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        line-height: 1.2;
+        font-family: Montserrat, Roboto, sans-serif
+    }
+
+    .wrap {
+        margin: 0 auto;
+        padding: 1rem;
+        max-width: 600px
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-content: center
+    }
+
+    @media screen and (max-width: 650px) {
+        .grid {
+            grid-template-columns:1fr
+        }
+    }
+
+    .grid > div {
+        display: grid;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: .3rem
+    }
+
+    .grid > div > label {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .grid > div > * {
+        width: 100%;
+    }
+
+    button {
+        border: none;
+        background: #005180;
+        color: #fff;
+        width: 100%;
+        height: 100%;
+        padding: .5rem 1rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+        cursor: pointer
+    }
+
+    input {
+        outline: 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1.1rem;
+        line-height: 1.4;
+        padding: 2px 5px
+    }
+
+    input:focus, input:focus-visible, input:focus-within {
+        border-color: #222
+    }
+
+    input:disabled {
+        font-weight: 500;
+        background-color: #00518033;
+        color: #222
+    }</style>
+</head>
+
+<body>
+<div class="wrap">
+    <form id="f0" class="grid">
+        <div>
+            <label for="price"> price
+                <input type="number" id="price" name="price" value="0" max="9999999999"/>
+            </label>
+        </div>
+        <div>
+            <label for="netprice"> net price
+                <input type="number" id="netprice" name="netprice" value="100" max="10000000"/>
+            </label>
+        </div>
+        <div onclick="cpcb(this.querySelector('input').value);">
+            <label for="commission"> commission
+                <input type="number" id="commission" name="commission" disabled value="0"/>
+            </label>
+        </div>
+        <div style="align-self: end;">
+            <button type="submit" id="btn">calculate</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    (function (w, d) {
+        d.getElementById('f0').addEventListener('submit', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var p = Number(d.getElementById('price').value),
+                np = Number(d.getElementById('netprice').value);
+
+            d.getElementById('commission').value = (np / p * 100 - 100) * -1;
+
+            return false;
+        })
+
+        function tt(text) {
+            var t_text = (text) ? text : 'Done!';
+
+            var t = d.createElement("div");
+            t.style.margin = '50px auto';
+            t.style.padding = '30px';
+            t.style.border = '1px solid #ccc';
+            t.style.backgroundColor = '#ffffffcc';
+            t.style.position = 'fixed';
+            t.style.zIndex = '3000';
+            t.style.pointerEvents = 'none';
+            t.style.width = '350px';
+            t.style.fontSize = '24px';
+            t.style.fontWeight = '800';
+            t.style.textAlign = 'center';
+            t.style.color = '#222';
+            t.style.top = '0';
+            t.style.left = 'calc(50% - 175px)';
+            t.style.opacity = '0';
+            t.style.transition = 'opacity 250ms ease-in';
+            t.innerHTML = t_text;
+            d.body.appendChild(t)
+
+            t.style.opacity = '1';
+            setTimeout(function () {
+                t.style.opacity = '0';
+                setTimeout(function () {
+                    t.remove()
+                }, 500)
+            }, 1500)
+        }
+
+        w.cpcb = function (text) {
+            var copy = (text) ? text : window.location;
+            var t_text = (text) ? `${text} Copied!` : 'Copied!';
+
+            if (!navigator.clipboard) {
+                var textArea = d.createElement("textarea");
+                textArea.value = copy;
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                textArea.style.position = "fixed";
+
+                d.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                try {
+                    tt(t_text);
+                } catch (err) {
+                    // console.error('Fallback: Could not copy text: ', err);
+                }
+
+                d.body.removeChild(textArea);
+                return;
+            }
+
+            navigator.clipboard.writeText(copy).then(function () {
+                tt(t_text);
+            }, function (err) {
+                // console.error('Async: Could not copy text: ', err);
+            });
+        }
+    })(window, document);
+</script>
+</body>
+
+</html>
