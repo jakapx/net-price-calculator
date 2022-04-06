@@ -1,0 +1,97 @@
+!.gitignore
+
+.editorconfig
+
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer
+/vendor
+composer.phar
+composer.lock
+
+# npm
+/node_modules
+package-lock.json
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml
+
+# test results
+tests/_output/*
+tests/_support/_generated
+
+# folders uploads
+/web/uploads/*
+/public/uploads/*
+
+# cache
+/web/runtime/*
+/web/assets/*
+/legacy/runtime/*
+/legacy/web/assets/*
+/public/assets/*
+
+#configs
+/config/db.conf.php
+/config/mailer.conf.php
+/config/params.conf.php
+/config/paypal.conf.php
+/config/legacy.paypal.conf.php
+
+# sql dumps
+/_sql/*
+
+# sublime project files
+*.sublime-project
+*.sublime-workspace
+
+# sublime plugins files
+sftp-config.json
+
+# vscode project files
+*/.vscode/
+tripspoint.code-workspace
+
+# production server specific
+.htaccess
+.well-known/
+php.ini
+.php.ini.swp
+.ftpquota
+.user.ini
+
+# others
+.bowerrc
+
+# deprecated
+/runtime/*
+
+# ide helper - php artisan ide-helper:generate to generate
+_ide_helper.php
+
+.env
+sitemap.xml
+sitemap_images.xml
+sitemap_video.xml
+sitemap_mobile.xml
+sitemap_news.xml
+feed_rss.xml
+.phpstorm.meta.php
+_ide_helper_models.php
