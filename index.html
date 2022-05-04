@@ -88,12 +88,12 @@
     <form id="f0" class="grid">
         <div>
             <label for="price"> price
-                <input type="number" id="price" name="price" value="" max="9999999999"/>
+                <input type="number" id="price" name="price" step="0.01" value="" max="9999999999"/>
             </label>
         </div>
         <div>
             <label for="netprice"> net price
-                <input type="number" id="netprice" name="netprice" value="" max="10000000"/>
+                <input type="number" id="netprice" name="netprice" step="0.01"  value="" max="10000000"/>
             </label>
         </div>
         <div onclick="cpcb(this.querySelector('input').value);">
