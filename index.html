@@ -85,6 +85,7 @@
 
 <body>
 <div class="wrap">
+    <h2>Commission calculator</h2>
     <form id="f0" class="grid">
         <div>
             <label for="price"> price
@@ -93,7 +94,7 @@
         </div>
         <div>
             <label for="netprice"> net price
-                <input type="number" id="netprice" name="netprice" step="0.01"  value="" max="10000000"/>
+                <input type="number" id="netprice" name="netprice" step="0.01" value="" max="10000000"/>
             </label>
         </div>
         <div onclick="cpcb(this.querySelector('input').value);">
@@ -103,6 +104,54 @@
         </div>
         <div style="align-self: end;">
             <button type="submit" id="btn">calculate</button>
+        </div>
+    </form>
+
+    <hr>
+
+    <h2>Public price calculator</h2>
+    <form id="f1" class="grid">
+        <div onclick="cpcb(this.querySelector('price1').value);">
+            <label for="price"> price
+                <input type="number" id="price1" name="price" step="0.01" disabled value="" max="9999999999"/>
+            </label>
+        </div>
+        <div>
+            <label for="netprice"> net price
+                <input type="number" id="netprice1" name="netprice" step="0.01" value="" max="10000000"/>
+            </label>
+        </div>
+        <div>
+            <label for="commission"> commission
+                <input type="number" id="commission1" name="commission" value=""/>
+            </label>
+        </div>
+        <div style="align-self: end;">
+            <button type="submit" id="btn1">calculate</button>
+        </div>
+    </form>
+
+    <hr>
+
+    <h2>Net price calculator</h2>
+    <form id="f2" class="grid">
+        <div>
+            <label for="price"> price
+                <input type="number" id="price2" name="price" step="0.01"  value="" max="9999999999"/>
+            </label>
+        </div>
+        <div onclick="cpcb(this.querySelector('price1').value);">
+            <label for="netprice"> net price
+                <input type="number" id="netprice2" name="netprice" step="0.01" disabled value="" max="10000000"/>
+            </label>
+        </div>
+        <div>
+            <label for="commission"> commission
+                <input type="number" id="commission2" name="commission" value=""/>
+            </label>
+        </div>
+        <div style="align-self: end;">
+            <button type="submit" id="btn2">calculate</button>
         </div>
     </form>
 </div>
@@ -116,6 +165,47 @@
                 np = Number(d.getElementById('netprice').value);
 
             d.getElementById('commission').value = (np / p * 100 - 100) * -1;
+
+            return false;
+        })
+
+        function round(variable, decimalPlaces = 2) {
+            var divisor = 1;
+            for (let i = 0; i < decimalPlaces; i++) {
+                divisor *= 10;
+            }
+
+            return (Math.round((Number(variable) + Number.EPSILON) * divisor) / divisor).toFixed(decimalPlaces);
+        }
+
+        d.getElementById('f1').addEventListener('submit', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var np = Number(d.getElementById('netprice1').value),
+                com = Number(d.getElementById('commission1').value);
+            let approximation = np
+            let comm = 0;
+
+            while (comm <= com) {
+                approximation += 0.1
+
+                comm = (np / approximation * 100 - 100) * -1
+            }
+
+            d.getElementById('price1').value = round(approximation);
+
+            return false;
+        })
+
+        d.getElementById('f2').addEventListener('submit', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var p = Number(d.getElementById('price2').value),
+                com = Number(d.getElementById('commission2').value);
+
+            d.getElementById('netprice2').value = round(p - (p / 100 * com));
 
             return false;
         })
