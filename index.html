@@ -85,6 +85,22 @@
 
 <body>
 <div class="wrap">
+    <form id="f3" class="grid">
+        <div>
+            <label for="price">recommended price
+                <input type="number" id="rec_price3" name="price" step="0.01" value="" max="9999999999"/>
+            </label>
+        </div>
+        <div>
+            <label for="price">recommended commission
+                <input type="number" id="rec_commission3" name="price" step="0.01" value="" max="9999999999"/>
+            </label>
+        </div>
+        <div style="align-self: end;">
+            <button type="submit" id="btn3">set</button>
+        </div>
+    </form>
+
     <h2>Commission calculator</h2>
     <form id="f0" class="grid">
         <div>
@@ -103,7 +119,7 @@
             </label>
         </div>
         <div style="align-self: end;">
-            <button type="submit" id="btn">calculate</button>
+            <button type="submit" id="btn_com">calculate</button>
         </div>
     </form>
 
@@ -137,7 +153,7 @@
     <form id="f2" class="grid">
         <div>
             <label for="price"> price
-                <input type="number" id="price2" name="price" step="0.01"  value="" max="9999999999"/>
+                <input type="number" id="price2" name="price" step="0.01" value="" max="9999999999"/>
             </label>
         </div>
         <div onclick="cpcb(this.querySelector('price1').value);">
@@ -206,6 +222,21 @@
                 com = Number(d.getElementById('commission2').value);
 
             d.getElementById('netprice2').value = round(p - (p / 100 * com));
+
+            return false;
+        })
+
+        d.getElementById('f3').addEventListener('submit', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var recP = Number(d.getElementById('rec_price3').value),
+                recC = Number(d.getElementById('rec_commission3').value),
+                com = ((recP - recC) / recP * 100 - 100) * -1;
+
+            d.getElementById('price').value = d.getElementById('price1').value = d.getElementById('price2').value = recP
+            d.getElementById('netprice').value = d.getElementById('netprice1').value = d.getElementById('netprice2').value = recP - recC;
+            d.getElementById('commission').value = d.getElementById('commission1').value = d.getElementById('commission2').value = com;
 
             return false;
         })
